@@ -1,5 +1,10 @@
 # Journal des modifications
 
+## Version 67 — nouveau logo
+- **Nouveau logo « Chaîne · relief »** : trois boules de neige posées côte à côte, de plus en plus grosses (tailles dans le nombre d'or), sur le bleu snowball. Léger dégradé de neige vers le bas à droite, ombre douce et liseré de lumière pour le volume.
+- Installé partout : icône de l'écran d'accueil, petit logo de la barre du haut, écran de lancement, écran du code, page « Confidentialité et à propos ».
+- Tests : parcours-accueil 171/171 · snowball 96/96.
+
 ## Version 66
 - **Question de secours pour le code** : « Nom de jeune fille de votre mère », demandée juste après la confirmation du code (le code n'est activé qu'une fois la réponse enregistrée). Majuscules, accents, espaces et tirets ne comptent pas.
 - **Code oublié ?** pose la question : la bonne réponse permet de choisir un nouveau code (tapé puis confirmé) ; les données restent intactes.

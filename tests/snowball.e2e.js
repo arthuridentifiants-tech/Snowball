@@ -131,7 +131,7 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
     await p.evaluate(() => { location.hash = '#/a'; }); await p.waitForTimeout(250);
     ok(await p.locator('.n-fresh').count() === 1, 'Mon argent : date de mise à jour des cours et des soldes');
     await p.evaluate(() => openAboutModal()); await p.waitForTimeout(150);
-    ok(/Version 66/.test(await p.locator('#modal-root').innerText()) && /restent chez vous/.test(await p.locator('#modal-root').innerText()), 'écran Confidentialité et à propos');
+    ok(/Version 67/.test(await p.locator('#modal-root').innerText()) && /restent chez vous/.test(await p.locator('#modal-root').innerText()), 'écran Confidentialité et à propos');
     const tap = async c => { for (const k of c) await p.click(`#lock .lk-k[aria-label="${k}"]`); await p.waitForTimeout(250); };
     await p.evaluate(() => { $('#modal-root').innerHTML = ''; openPinModal(); }); await p.waitForTimeout(150);
     ok(/Choisissez un code/.test(await p.locator('#lock').innerText()), 'code : création avec le pavé numérique');

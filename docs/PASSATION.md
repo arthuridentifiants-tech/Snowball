@@ -1,6 +1,6 @@
 # Passation — application « snowball »
 
-État au 24 novembre 2026, **version 66** (`index.html`). Ce document reprend tout le contexte utile pour continuer le développement dans une nouvelle conversation.
+État au 24 novembre 2026, **version 67** (`index.html`). Ce document reprend tout le contexte utile pour continuer le développement dans une nouvelle conversation.
 
 ---
 
@@ -38,7 +38,7 @@ Ces règles ont été fixées au fil de la conversation ; les respecter évite d
 
 | Fichier | Rôle |
 |---|---|
-| `index.html` | L'application complète (v66). |
+| `index.html` | L'application complète (v67). |
 | `CHANGELOG.md` | Historique détaillé des versions 1 à 50. |
 | `docs/PASSATION.md` | Ce document. |
 | `tests/parcours-accueil.e2e.js` | Série historique (170 vérifications + 1 ajoutée en v63) : rejoue le questionnaire complet (comptes, titres, Livret A, épargne salariale, crédits, budget, projets, plan, profil, fin), puis tous les écrans, sauvegarde, reprise, thème sombre, utilisateur existant, 320 px, aucune erreur JS. Relais Google simulé. Captures : `SHOTS=/dossier/ node tests/parcours-accueil.e2e.js`. |
@@ -188,7 +188,7 @@ Historique (v33 à v50, remplacé par le fonctionnement ci-dessus) :
 
 ## 8. Décisions et historique important
 
-- **Identité** : nom « snowball » en minuscules, blanc « neige », métaphore de la boule. **Depuis la v61**, on ne dit plus « boule » mais « votre snowball » ; le mot s'écrit avec `sbT()` / `SB()` (classe `.sb` : Fraunces 600, bleu `--primary`), comme le logo. Icône d'écran d'accueil = proposition n° 23 (colline de neige blanche, boule, « snowball » en bleu), PNG 180 px intégré. Le nom « Clarté » a été rejeté.
+- **Identité** : nom « snowball » en minuscules, blanc « neige », métaphore de la boule. **Depuis la v61**, on ne dit plus « boule » mais « votre snowball » ; le mot s'écrit avec `sbT()` / `SB()` (classe `.sb` : Fraunces 600, bleu `--primary`), comme le logo. Logo depuis la v67 = « Chaîne · relief » (proposition 137 C) : trois boules côte à côte, rayons dans le nombre d'or (37/φ², 37/φ, 37), posées sur une même ligne, dégradé radial de neige, ombre douce et liseré ; fond bleu #2A5BFF → #1B3FE0. PNG 180 px intégré (apple-touch-icon, réutilisé par l'écran de lancement, le code et À propos) + SVG inline dans la barre du haut (identifiants préfixés `lg-`). Logos précédents : n° 23 (v61), colline (v54). Le nom « Clarté » a été rejeté.
 - **Interface** : la maquette v4 (5 onglets, niveaux de lecture, « En savoir plus » en graphiques) a été retenue ; la v18 (très simplifiée selon une « carte ») a été rejetée et annulée (v19 = retour à la v17).
 - **Sélection du catalogue (v23)** : widgets retenus `1-5, 7-24, 26, 27, 30, 34, 35, 40, 41, 45, 46, 49, 51, 52, 57, 58, 61, 62, 64-66, 70-76, 78-80, 84, 90-95, 97, 98, 100, 103, 106`. **Doublons tranchés : on garde 23 (pas 22), 27 (pas 90), 93 (pas 92), 96 (pas 98), 76 (pas 75).** Retirés : carte « À compléter », alertes, « Bien joué », score sur l'Accueil, cascade et effort/marchés, maison qui se remplit, louer ou acheter, performances par position, calendrier de l'année en colonnes, indépendance financière, bascule brut/net, courbe avec et sans fuites, barre de progression du questionnaire. Gardés car indispensables : listes des comptes et des projets, saisie du budget, Valider un achat, Réglages.
 - **Refusés** : petits carrés « mois tenus », « points » dans la répartition (remplacés par des %), bouton « Changer le logo », compression du message IA, Copilot (remplacé par Grok).
@@ -237,7 +237,7 @@ Conseils :
 
 ## 11. Message à coller pour démarrer la nouvelle conversation
 
-> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 66), `CHANGELOG.md`, `PASSATION.md` et les outils (`snowball.e2e.js`, `build-demo.py`, `shot.js`, `demo-data.js`). Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
+> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 67), `CHANGELOG.md`, `PASSATION.md` et les outils (`snowball.e2e.js`, `build-demo.py`, `shot.js`, `demo-data.js`). Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
 >
 > Pour commencer : mets `index.html` et `CHANGELOG.md` à la racine du dépôt, `PASSATION.md` dans `docs/`, `snowball.e2e.js` dans `tests/`, `build-demo.py` et `shot.js` dans `tools/`, `demo-data.js` dans `prototype/capture/` ; lance `python3 tools/build-demo.py && node tests/snowball.e2e.js` (43/43 attendu) ; fais un commit « Version 53 » et envoie-le sur GitHub.
 >
