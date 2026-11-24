@@ -28,6 +28,12 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
     const txt = (await p.locator('#app, main, body').first().innerText()).trim();
     ok(p.errs.length === n0 && txt.length > 50, `écran ${r}`, p.errs.slice(n0).join(' | '));
   }
+  // 2 bis. « snowball » à la place de « boule », dans la typographie du logo (v61)
+  { let bad = [];
+    for (const r of ['#/', '#/b', '#/n', '#/s']) { await p.evaluate(x => { location.hash = x; }, r); await p.waitForTimeout(200); if (/boule/i.test(await p.locator('#app, main, body').first().innerText())) bad.push(r); }
+    ok(!bad.length, 'plus de « boule » à l’écran', bad.join(' '));
+    await p.evaluate(() => { location.hash = '#/'; }); await p.waitForTimeout(200);
+    ok(await p.evaluate(() => { const e = document.querySelector('.n-kick .sb'); return !!e && e.textContent === 'snowball' && /Fraunces/.test(getComputedStyle(e).fontFamily); }), 'Accueil : « Votre snowball » dans la typographie du logo'); }
   // 3. Chiffres de la démo
   await p.evaluate(() => { location.hash = '#/a'; }); await p.waitForTimeout(300);
   ok(/7/.test(await p.locator('body').innerText()) && await p.evaluate(() => S.envs.length) === 7, 'démo : 7 comptes');

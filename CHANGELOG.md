@@ -1,5 +1,11 @@
 # Journal des modifications
 
+## Version 61
+- **Nouvelle icône d'écran d'accueil (proposition n° 23)** : la boule sur une colline de neige blanche, « snowball » écrit en bleu dans la neige (police Fraunces).
+- **« boule » devient « snowball »** dans toute l'appli : « Votre snowball » (Accueil), « Ma snowball » (projection), « Ce qui fait fondre votre snowball », « Ce que votre snowball vous rapporte », « Votre snowball vous attend », « Votre snowball continue de grossir », « Votre snowball est prête », et dans l'accueil du questionnaire.
+- **Typographie du logo** : le mot « snowball » s'écrit partout comme le logo (Fraunces, demi-gras, bleu de l'appli), y compris le nom dans la barre du haut. Le reste de l'appli garde sa typographie.
+- Tests : 70/70.
+
 ## Version 60
 - **Date d'ouverture des contrats demandée plus tôt** : dans le questionnaire, sur l'écran de chaque PEA et assurance vie (ligne « Date d'ouverture · facultatif », sous la banque) et de l'épargne salariale (« Premier versement »). L'écran à part de la partie « Et vous » est retiré. Toujours modifiable dans Réglages → Mes données → Mon profil.
 - Tests : 68/68.
