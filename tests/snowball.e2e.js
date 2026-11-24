@@ -114,6 +114,39 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
     ok(await p.evaluate(() => wzState().at) === 'end', 'Questionnaire : « Passer cette partie » mène à la fin');
     await p.evaluate(() => closeWizard(false)); await p.waitForTimeout(150);
     await p.evaluate(() => { delete S.prof; save(); $('#modal-root').innerHTML = ''; }); }
+  // 4 ter. Version 63 : identité, chiffres, confiance, confort
+  { await p.evaluate(() => { $('#modal-root').innerHTML = ''; location.hash = '#/'; }); await p.waitForTimeout(300);
+    ok(await p.evaluate(() => !!document.querySelector('.brand-icon svg circle') && !document.getElementById('splash')), 'mini-logo dans la barre du haut, écran de lancement retiré');
+    ok(await p.evaluate(() => getComputedStyle(document.body).fontVariantNumeric.includes('tabular-nums')), 'chiffres de même largeur');
+    ok(!/k€/.test(await p.locator('.ess-row').first().innerText()), 'L’essentiel : montant complet (pas de k€)');
+    ok(await p.locator('.n-todo', { hasText: 'Sauvegarder mes données' }).count() === 1, 'rappel de sauvegarde sur l’Accueil');
+    const [dl] = await Promise.all([p.waitForEvent('download', { timeout: 3000 }).catch(() => null), p.locator('.n-todo', { hasText: 'Sauvegarder mes données' }).locator('button').click()]);
+    await p.waitForTimeout(500);
+    ok(dl && await p.locator('.n-todo', { hasText: 'Sauvegarder mes données' }).count() === 0, 'sauvegarde faite : le rappel disparaît');
+    await p.click('#btn-eye'); await p.waitForTimeout(300);
+    const hidden = await p.locator('#app').innerText();
+    ok(!/\d\s?€/.test(hidden) && /•••/.test(hidden), 'mode discret : montants masqués');
+    await p.click('#btn-eye'); await p.waitForTimeout(300);
+    ok(/\d\s?€/.test(await p.locator('#app').innerText()), 'mode discret : montants de nouveau visibles');
+    await p.evaluate(() => { location.hash = '#/a'; }); await p.waitForTimeout(250);
+    ok(await p.locator('.n-fresh').count() === 1, 'Mon argent : date de mise à jour des cours et des soldes');
+    await p.evaluate(() => openAboutModal()); await p.waitForTimeout(150);
+    ok(/Version 63/.test(await p.locator('#modal-root').innerText()) && /restent chez vous/.test(await p.locator('#modal-root').innerText()), 'écran Confidentialité et à propos');
+    await p.evaluate(() => { $('#modal-root').innerHTML = ''; openPinModal(); }); await p.waitForTimeout(150);
+    await p.fill('input[aria-label="Nouveau code"]', '1234'); await p.fill('input[aria-label="Confirmez le code"]', '1234'); await p.click('#modal-root .btn-primary');
+    await p.goto(DEMO); await p.waitForTimeout(600);
+    ok(await p.locator('#lock').count() === 1, 'code : écran verrouillé à l’ouverture');
+    for (const k of '1111') await p.click(`.lk-k[aria-label="${k}"]`);
+    await p.waitForTimeout(150);
+    ok(/incorrect/.test(await p.locator('#lock').innerText()), 'code : mauvais code refusé');
+    await p.waitForTimeout(500);
+    for (const k of '1234') await p.click(`.lk-k[aria-label="${k}"]`);
+    await p.waitForTimeout(400);
+    ok(await p.locator('#lock').count() === 0, 'code : bon code, appli ouverte');
+    await p.evaluate(() => { delete S.pinH; delete S.pinS; save(); });
+    await p.evaluate(() => { const g = S.goals; S.goals = []; location.hash = '#/x'; location.hash = '#/'; window._g = g; }); await p.waitForTimeout(250);
+    ok(await p.locator('.ess-row .n-pill', { hasText: 'Ajouter' }).count() === 1, 'Mes projets vide : vrai bouton « Ajouter »');
+    await p.evaluate(() => { S.goals = window._g; save(); render(); }); }
   // 5. Thème sombre et persistance
   await p.evaluate(() => { S.theme = 'dark'; save(); applyTheme(); });
   ok(await p.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'thème sombre');

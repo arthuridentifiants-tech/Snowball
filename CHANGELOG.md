@@ -1,5 +1,30 @@
 # Journal des modifications
 
+## Version 63 — une appli propre et sérieuse
+**Identité**
+- Mini-logo de la barre du haut : la boule sur la colline, comme l'icône.
+- Écran de lancement : l'icône et « snowball » pendant le chargement.
+
+**Chiffres**
+- Tous les chiffres ont la même largeur (montants bien alignés).
+- L'essentiel : montant complet pour Mon argent (plus de « k€ »).
+- Mes projets sans projet : un vrai bouton « + Ajouter » au lieu d'un texte écrit comme un montant.
+
+**Confiance**
+- **Mode discret** : bouton œil dans la barre du haut, tous les montants deviennent « ••• € » (données inchangées).
+- **Fraîcheur** : sous le patrimoine net de Mon argent, l'heure des cours et l'ancienneté du plus vieux solde saisi à la main.
+- **Confidentialité et à propos** (Réglages) : données sur le téléphone, ni publicité ni pistage, services contactés, source des cours, avertissement, version.
+- **Rappel de sauvegarde** : dans « Ce mois-ci » si aucune sauvegarde depuis 30 jours ; date de la dernière sauvegarde dans Réglages.
+- **Verrouillage par code** (facultatif, Réglages → Sécurité) : code à 4 chiffres à l'ouverture et après une minute dans une autre appli.
+
+**Confort**
+- Accueil : une seule ligne « Votre courbe démarre demain » ; seules les périodes déjà couvertes sont proposées ; sous-titre raccourci.
+- Vraies icônes à la place des symboles (€, ↗, %, ⌂, §) dans « Ce qui fait fondre » ; émojis retirés.
+- Tirer vers le bas en haut de l'écran pour actualiser les cours.
+- Transition douce à chaque changement d'écran (désactivée si l'iPhone réduit les animations).
+- Thème sombre vérifié sur les écrans principaux.
+- Tests : 83/83.
+
 ## Version 62
 - **Plus de flou en haut de l'écran** : la barre du haut est maintenant pleine (sans transparence ni effet de flou), pour un haut d'écran net sous l'heure et la batterie.
 - Tests : 70/70.
