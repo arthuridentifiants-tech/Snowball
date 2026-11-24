@@ -63,6 +63,29 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
   ok(await p.locator('.ai-manual a', { hasText: 'Ouvrir Gemini' }).count() === 1, 'IA : copie à la main → bouton « Ouvrir Gemini »');
   await p.reload(); await p.waitForTimeout(400);
   await p.evaluate(() => { $('#modal-root').innerHTML = ''; });
+  // 4 bis. Contexte précis pour l'IA (v58) et « Mon profil »
+  { const t = await p.evaluate(() => buildAIPromptFull(null, true));
+    ok(['## En bref', '## Mon profil', '## Disponibilité de l’argent', '## Projection', '## Ce que l’appli ne sait pas', '## Repères fiscaux'].every(x => t.includes(x)), 'IA contexte : nouvelles rubriques présentes');
+    ok(!/NaN|undefined|null|Crédit Crédit|\[object/.test(t), 'IA contexte : aucune valeur cassée ni doublon « Crédit Crédit »');
+    ok(/cours actuel 545/.test(t) && /prix de revient moyen 420,00/.test(t) && /valeur 6.540.€/.test(t), 'IA contexte : cours actuel et prix de revient distincts');
+    ok(/plafond 22.950.€, encore 10.450.€ de place/.test(t), 'IA contexte : place restante sur le Livret A');
+    ok(/Inflation : non disponible/.test(t), 'IA contexte : inflation inconnue signalée (pas 0 %)');
+    await p.evaluate(() => openSettingsModal()); await p.waitForTimeout(150);
+    await p.locator('.set-row', { hasText: 'Mon profil' }).click(); await p.waitForTimeout(150);
+    ok(await p.locator('.modal-title', { hasText: 'Mon profil' }).count() === 1, 'Mon profil : s’ouvre depuis les Réglages');
+    const pea = await p.evaluate(() => S.envs.find(e => e.type === 'pea').id);
+    await p.locator('select[aria-label="Année de naissance"]').selectOption('1985');
+    await p.locator('.prof-g', { hasText: 'Tranche d’imposition' }).locator('select').selectOption('30');
+    await p.locator('.prof-g', { hasText: 'Situation familiale' }).locator('select').selectOption('marie');
+    await p.locator('.prof-g', { hasText: 'Logement' }).locator('select').selectOption('proprio');
+    await p.evaluate(id => { const i = [...document.querySelectorAll('input[type="month"]')][0]; i.value = '2018-03'; i.dispatchEvent(new Event('change')); }, pea);
+    const t2 = await p.evaluate(() => buildAIPromptFull(null, true));
+    ok(/Âge : 4\d ans \(né·e en 1985\)/.test(t2) && /Tranche marginale d’imposition : 30 %/.test(t2), 'Mon profil : âge et tranche d’imposition dans le contexte');
+    ok(/Ouvert en mars 2018, il y a 8 ans .* plus de 5 ans/.test(t2) && !/ouverture du compte « PEA 1 »/.test(t2), 'Mon profil : date d’ouverture du PEA prise en compte');
+    ok(await p.evaluate(() => JSON.parse(localStorage.getItem('pf.v1')).prof.tmi) === 30, 'Mon profil : enregistré');
+    await p.evaluate(() => { openAIModal(); }); await p.waitForTimeout(150);
+    ok(/Complété/.test(await p.locator('.ai-prof').innerText()), 'IA : lien « Mon profil » indique qu’il est complété');
+    await p.evaluate(() => { delete S.prof; save(); $('#modal-root').innerHTML = ''; }); }
   // 5. Thème sombre et persistance
   await p.evaluate(() => { S.theme = 'dark'; save(); applyTheme(); });
   ok(await p.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'thème sombre');

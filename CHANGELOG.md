@@ -1,5 +1,13 @@
 # Journal des modifications
 
+## Version 58
+- **Demander à une IA : contexte beaucoup plus précis** :
+  1. **Imprécisions corrigées** : plus de « Crédit Crédit auto » ; inflation « non disponible » au lieu de 0 % quand elle n'a pas pu être chargée ; pour chaque titre, **cours actuel** et **prix de revient moyen** distincts, valeur, montant investi, plus-value en € et en %, **poids** dans les placements ; mensualités totales et du seul crédit immobilier distinguées.
+  2. **Nouveaux chiffres** : place restante sur le Livret A et le PEA (plafond 150 000 €), disponibilité de l'argent (tout de suite, en quelques jours, bloqué, long à vendre), part du bien déjà à vous, évolution par classe d'actifs sur 3, 6 et 12 mois, ce qui fait fondre le patrimoine sur 20 ans, projection à 10 et 20 ans, les 60 prochains jours, épargne vraiment libre après les projets.
+  3. **L'IA est mieux guidée** : résumé « En bref » en tête, règles de réponse (chiffres compte par compte, calcul de l'impôt avant toute vente, hypothèses claires si une donnée manque, 3 actions au plus), repères fiscaux 2026 complets (PEA, assurance vie, PER, livrets, compte-titres), rubrique « Ce que l'appli ne sait pas ».
+  4. **Nouveau : « Mon profil »** (Réglages → Demander à une IA, et dans la fenêtre IA) : année de naissance, situation familiale, enfants, situation professionnelle, tranche d'imposition, logement, goût du risque, date d'ouverture du PEA, de l'assurance vie et de l'épargne salariale. Tout est facultatif et ne sert qu'au message pour l'IA ; aucun chiffre de l'appli ne change.
+- Tests : 61/61.
+
 ## Version 57
 - **Demander à une IA : retour à un seul toucher** (à la demande) : toucher une IA copie le contexte et l'ouvre aussitôt, comme en v55. La question se copie ensuite depuis snowball (étape 2) et se colle dans la même discussion.
 - Conservé de la v56 : la consigne « Bien reçu. » (v55), la copie à la main si la copie automatique échoue, et le lien « La copie ne marche pas ? Copier à la main ».
