@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## Version 62
+- **Plus de flou en haut de l'écran** : la barre du haut est maintenant pleine (sans transparence ni effet de flou), pour un haut d'écran net sous l'heure et la batterie.
+- Tests : 70/70.
+
 ## Version 61
 - **Nouvelle icône d'écran d'accueil (proposition n° 23)** : la boule sur une colline de neige blanche, « snowball » écrit en bleu dans la neige (police Fraunces).
 - **« boule » devient « snowball »** dans toute l'appli : « Votre snowball » (Accueil), « Ma snowball » (projection), « Ce qui fait fondre votre snowball », « Ce que votre snowball vous rapporte », « Votre snowball vous attend », « Votre snowball continue de grossir », « Votre snowball est prête », et dans l'accueil du questionnaire.

@@ -1,6 +1,6 @@
 # Passation — application « snowball »
 
-État au 24 novembre 2026, **version 61** (`index.html`). Ce document reprend tout le contexte utile pour continuer le développement dans une nouvelle conversation.
+État au 24 novembre 2026, **version 62** (`index.html`). Ce document reprend tout le contexte utile pour continuer le développement dans une nouvelle conversation.
 
 ---
 
@@ -38,7 +38,7 @@ Ces règles ont été fixées au fil de la conversation ; les respecter évite d
 
 | Fichier | Rôle |
 |---|---|
-| `index.html` | L'application complète (v61). |
+| `index.html` | L'application complète (v62). |
 | `CHANGELOG.md` | Historique détaillé des versions 1 à 50. |
 | `docs/PASSATION.md` | Ce document. |
 | `tests/snowball.e2e.js` | Tests de bout en bout (Playwright), **70 vérifications** : questionnaire pour un nouvel utilisateur, 18 écrans sans erreur, chiffres de la démo, « Demander à une IA » en 2 temps (presse-papiers vérifié), thème sombre, données conservées, 320 px sans débordement, icône et réglages de la web app. |
@@ -231,7 +231,7 @@ Conseils :
 
 ## 11. Message à coller pour démarrer la nouvelle conversation
 
-> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 61), `CHANGELOG.md`, `PASSATION.md` et les outils (`snowball.e2e.js`, `build-demo.py`, `shot.js`, `demo-data.js`). Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
+> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 62), `CHANGELOG.md`, `PASSATION.md` et les outils (`snowball.e2e.js`, `build-demo.py`, `shot.js`, `demo-data.js`). Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
 >
 > Pour commencer : mets `index.html` et `CHANGELOG.md` à la racine du dépôt, `PASSATION.md` dans `docs/`, `snowball.e2e.js` dans `tests/`, `build-demo.py` et `shot.js` dans `tools/`, `demo-data.js` dans `prototype/capture/` ; lance `python3 tools/build-demo.py && node tests/snowball.e2e.js` (43/43 attendu) ; fais un commit « Version 53 » et envoie-le sur GitHub.
 >
