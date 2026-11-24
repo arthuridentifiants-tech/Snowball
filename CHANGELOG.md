@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## Version 65
+- **Pavé du code bien plus réactif** : chaque touche réagit dès que le doigt se pose (et non plus au relâchement), l'iPhone ne prend plus deux touchers rapides pour un double-toucher de zoom, et la touche s'éclaire aussitôt. Sur ordinateur, les chiffres du clavier fonctionnent aussi.
+- Tests : parcours-accueil 171/171 · snowball 91/91.
+
 ## Version 64
 - **Créer le code avec le pavé numérique** : on tape le code, puis on le confirme une deuxième fois ; si les deux sont différents, on recommence.
 - **Retirer le code demande le code actuel** (avant, une simple confirmation suffisait).

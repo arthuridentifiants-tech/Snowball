@@ -131,10 +131,13 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
     await p.evaluate(() => { location.hash = '#/a'; }); await p.waitForTimeout(250);
     ok(await p.locator('.n-fresh').count() === 1, 'Mon argent : date de mise à jour des cours et des soldes');
     await p.evaluate(() => openAboutModal()); await p.waitForTimeout(150);
-    ok(/Version 64/.test(await p.locator('#modal-root').innerText()) && /restent chez vous/.test(await p.locator('#modal-root').innerText()), 'écran Confidentialité et à propos');
+    ok(/Version 65/.test(await p.locator('#modal-root').innerText()) && /restent chez vous/.test(await p.locator('#modal-root').innerText()), 'écran Confidentialité et à propos');
     const tap = async c => { for (const k of c) await p.click(`#lock .lk-k[aria-label="${k}"]`); await p.waitForTimeout(250); };
     await p.evaluate(() => { $('#modal-root').innerHTML = ''; openPinModal(); }); await p.waitForTimeout(150);
     ok(/Choisissez un code/.test(await p.locator('#lock').innerText()), 'code : création avec le pavé numérique');
+    await p.evaluate(() => { for (const k of '12') document.querySelector(`#lock .lk-k[aria-label="${k}"]`).dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true })); });
+    ok(await p.locator('#lock .lk-dots i.on').count() === 2, 'code : touches rapides toutes prises en compte (dès que le doigt se pose)');
+    await p.evaluate(() => { for (let i = 0; i < 2; i++) document.querySelector('#lock .lk-k[aria-label="Effacer"]').dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true })); });
     await tap('1234'); ok(/Confirmez votre code/.test(await p.locator('#lock').innerText()), 'code : demande de confirmation');
     await tap('9999'); await p.waitForTimeout(500);
     ok(/différents/.test(await p.locator('#lock').innerText()) && await p.evaluate(() => !S.pinH), 'code : confirmation différente refusée');
