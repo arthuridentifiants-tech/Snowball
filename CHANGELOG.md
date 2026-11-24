@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## Version 66
+- **Question de secours pour le code** : « Nom de jeune fille de votre mère », demandée juste après la confirmation du code (le code n'est activé qu'une fois la réponse enregistrée). Majuscules, accents, espaces et tirets ne comptent pas.
+- **Code oublié ?** pose la question : la bonne réponse permet de choisir un nouveau code (tapé puis confirmé) ; les données restent intactes.
+- Code créé avant cette version : Réglages → « Ajouter la question de secours » (après avoir tapé le code actuel).
+- Retirer le code efface aussi la réponse enregistrée.
+- Tests : parcours-accueil 171/171 · snowball 96/96.
+
 ## Version 65
 - **Pavé du code bien plus réactif** : chaque touche réagit dès que le doigt se pose (et non plus au relâchement), l'iPhone ne prend plus deux touchers rapides pour un double-toucher de zoom, et la touche s'éclaire aussitôt. Sur ordinateur, les chiffres du clavier fonctionnent aussi.
 - Tests : parcours-accueil 171/171 · snowball 91/91.
