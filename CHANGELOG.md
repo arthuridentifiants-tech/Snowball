@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## Version 54
+- **Web app sur iPhone** : snowball est publié sur GitHub Pages (dépôt `snowball-app`), à ouvrir dans Safari puis « Sur l'écran d'accueil ».
+- **Icône d'écran d'accueil** : la boule de neige blanche sur fond bleu (intégrée au fichier), au lieu d'une miniature de la page.
+- **Nom sous l'icône** : toujours « snowball » (et non le titre complet de la page).
+- **Barre du haut** (heure, batterie) : suit le thème clair ou sombre.
+- Tests : 47/47 (4 vérifications ajoutées pour la web app).
+
 ## Version 53
 - **Demander à une IA en 2 temps** :
   1. **Envoyez vos données** : toucher une IA copie toutes les données (sans question) et ouvre l'IA ; on colle et on envoie. Le message se termine par « Ma question arrive dans le message suivant » : l'IA répond simplement « Bien reçu ».

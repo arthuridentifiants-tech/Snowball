@@ -1,6 +1,6 @@
 # Passation — application « snowball »
 
-État au 24 novembre 2026, **version 53** (`index.html`). Ce document reprend tout le contexte utile pour continuer le développement dans une nouvelle conversation.
+État au 24 novembre 2026, **version 54** (`index.html`). Ce document reprend tout le contexte utile pour continuer le développement dans une nouvelle conversation.
 
 ---
 
@@ -26,9 +26,9 @@ Ces règles ont été fixées au fil de la conversation ; les respecter évite d
 3. **Exception** : les **petits détails visuels** (texte, taille, couleur, espacement, alignement, élément qui dépasse ou à retirer dans le même écran) se corrigent **directement**, sans attendre le go.
 4. **Toujours demander le go** pour : un calcul ou un chiffre, un élément qui change d'onglet, une fonction ajoutée ou supprimée, ce qui peut toucher aux données enregistrées.
 5. **Livrer à chaque fois le fichier `index.html` complet** (la personne le téléverse elle-même sur son téléphone). Les noms de fichiers côté téléphone sont du type `index-26.html`.
-6. **GitHub** : le dépôt est `arthuridentifiants-tech/Snowball` (privé). Les anciens dépôts `7jdj82pj62-lab/*` ont été supprimés : ne plus les utiliser. Commit avec un message clair et une entrée dans `CHANGELOG.md` à chaque version, puis envoi sur ce dépôt.
+6. **GitHub** : le dépôt est `arthuridentifiants-tech/Snowball` (privé). Les anciens dépôts `7jdj82pj62-lab/*` ont été supprimés : ne plus les utiliser. **Web app** : `arthuridentifiants-tech/snowball-app` (public, branche `main`, **uniquement `index.html`**) est publié par GitHub Pages à l'adresse https://arthuridentifiants-tech.github.io/snowball-app/ ; la personne ouvre snowball dans Safari, ajouté à l'écran d'accueil (plus de Sitecase ni de téléversement). À chaque version, envoyer `index.html` sur les deux dépôts. **Prudence GitHub** (le compte a déjà été suspendu) : un seul envoi par version, jamais de création ou suppression de dépôt, pas d'issue, commentaire, pull request ni workflow sans demande, pas d'envoi forcé, aucun autre dépôt. Commit avec un message clair et une entrée dans `CHANGELOG.md` à chaque version, puis envoi sur ce dépôt.
 7. **L'artifact « page de commentaires » n'est plus mis à jour** (demande explicite). Ne pas le republier.
-8. **Lancer les tests** après chaque modification (`python3 tools/build-demo.py && node tests/snowball.e2e.js` → actuellement **43/43**). Ajouter des vérifications quand on modifie une fonction.
+8. **Lancer les tests** après chaque modification (`python3 tools/build-demo.py && node tests/snowball.e2e.js` → actuellement **47/47**). Ajouter des vérifications quand on modifie une fonction.
 9. **Vérifier visuellement** avec des captures (voir § 9) et être honnête sur ce qui n'a pas pu être testé (l'environnement de développement n'a **pas d'accès internet** : logos, cours et apps IA ne peuvent pas y être vérifiés).
 10. **Préférences de fond exprimées** : une question par écran dans le questionnaire ; pas de défilement inutile ; mises en page centrées et équilibrées ; gain en vert, perte en rouge ; pas de doublons ; widgets pertinents, au bon endroit, au bon moment ; aller du général vers le détail ; « En savoir plus » = d'autres graphiques, pas du texte.
 
@@ -38,10 +38,10 @@ Ces règles ont été fixées au fil de la conversation ; les respecter évite d
 
 | Fichier | Rôle |
 |---|---|
-| `index.html` | L'application complète (v50). |
+| `index.html` | L'application complète (v54). |
 | `CHANGELOG.md` | Historique détaillé des versions 1 à 50. |
 | `docs/PASSATION.md` | Ce document. |
-| `tests/snowball.e2e.js` | Tests de bout en bout (Playwright), **43 vérifications** : questionnaire pour un nouvel utilisateur, 18 écrans sans erreur, chiffres de la démo, « Demander à une IA » en 2 temps (presse-papiers vérifié), thème sombre, données conservées, 320 px sans débordement. |
+| `tests/snowball.e2e.js` | Tests de bout en bout (Playwright), **47 vérifications** : questionnaire pour un nouvel utilisateur, 18 écrans sans erreur, chiffres de la démo, « Demander à une IA » en 2 temps (presse-papiers vérifié), thème sombre, données conservées, 320 px sans débordement, icône et réglages de la web app. |
 | `tools/build-demo.py` | Construit `tools/out/demo.html` : l'appli + les données d'exemple, pour les captures et les tests. |
 | `tools/shot.js` | Capture d'un écran de la démo au format iPhone : `node tools/shot.js '#/a' tools/out/argent.png [1 = page entière] [dark]`. Réseau coupé : logos en pastilles. |
 | `prototype/capture/demo-data.js` | Données d'exemple : PEA (3 lignes), compte-titres, Livret A, assurance vie, PEE, crypto, appartement avec crédit, crédit auto, budget, 2 grosses dépenses, 3 projets, plan d'achats, 400 jours d'historique. |
@@ -169,7 +169,7 @@ Animations « Tout commence petit » et « … voire fondre » (1, 2), bienvenue
 1. **Envoyez vos données** : toucher une IA copie le contexte seul (`buildAIPromptFull(null, anon)`, sans question, terminé par « Ma question arrive dans le message suivant ») puis ouvre l'IA (lien sans texte ; ChatGPT : `chatgpt.com/?q=` + caractère invisible U+200B, pour ouvrir l'app). L'IA choisie est retenue (`localStorage['pf.ai']`).
 2. **Posez votre question** : toucher une question toute prête la copie, ou « Copier ma question » ; on la colle dans la même discussion. (Un lien avec la question ouvrirait une nouvelle discussion, sans les données : refusé.)
 - Copie par `copyNow` (textarea + `execCommand('copy')` dans le geste, API presse-papiers en secours).
-- **Problème connu, en attente de go** : la personne ouvre snowball dans l'app **Sitecase**, où la copie ne se fait pas (l'IA reçoit un ancien message). Proposé : afficher le message déjà sélectionné avec un bouton « Copier et ouvrir » (la bulle « Copier » de l'iPhone marche partout) ; conseil : ouvrir snowball dans Safari et l'ajouter à l'écran d'accueil.
+- **Abandonné** (la personne passe par Safari en web app, v54) : la personne ouvrait snowball dans l'app **Sitecase**, où la copie ne se fait pas (l'IA reçoit un ancien message). Proposé : afficher le message déjà sélectionné avec un bouton « Copier et ouvrir » (la bulle « Copier » de l'iPhone marche partout) ; conseil : ouvrir snowball dans Safari et l'ajouter à l'écran d'accueil.
 
 Historique (v33 à v50, remplacé par le fonctionnement ci-dessus) :
 1. Fenêtre : question libre + bouton « Choisir une question toute prête » (6 questions), case **« Masquer les noms »** (cochée par défaut : « Banque A », « PEA 1 », « Bien 1 »… ; montants et titres conservés), grand bouton « Ouvrir avec… » (menu de partage iPhone), tuiles avec logo : **ChatGPT, Claude, Gemini, Le Chat, Perplexity, Grok**, « Copier le message », « Voir le message ».
@@ -200,7 +200,7 @@ Historique (v33 à v50, remplacé par le fonctionnement ci-dessus) :
 # Démo avec données d'exemple (à refaire après chaque modification de index.html)
 python3 tools/build-demo.py
 
-# Tests (Playwright, Chromium préinstallé) : doit afficher « 0 FAIL / 43 »
+# Tests (Playwright, Chromium préinstallé) : doit afficher « 0 FAIL / 47 »
 node tests/snowball.e2e.js
 
 # Capture d'un écran au format iPhone
@@ -217,8 +217,7 @@ Conseils :
 
 ## 10. Points ouverts
 
-- **En attente de go** : copie fiable dans Sitecase (voir § 7).
-- **Outils recréés** : tests (43 vérifications), démo et captures réécrits en version 53 (voir § 3).
+- **Outils recréés** : tests (47 vérifications depuis la v54), démo et captures réécrits en version 53 (voir § 3).
 
 - **Logos sur fond noir pour toutes les entreprises** : solution proposée et **non validée** = passer les logos par le relais Google (le script les récupère, l'appli les analyse et met tout sur fond blanc, sauf les fonds de couleur de marque comme Samsung ; mise en cache locale). Nécessite de mettre à jour le script Google une fois. Pour l'instant, seul Safran est corrigé ; ajouter les autres à `LOGO_DARK` au cas par cas.
 - **Logos manquants** : la personne peut envoyer une image ; l'intégrer dans `LOGO_EMBED` (recadrée en carré 128 px, PNG en base64) comme pour la Caisse d'Épargne et Natixis.
@@ -229,7 +228,7 @@ Conseils :
 
 ## 11. Message à coller pour démarrer la nouvelle conversation
 
-> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 53), `CHANGELOG.md`, `PASSATION.md` et les outils (`snowball.e2e.js`, `build-demo.py`, `shot.js`, `demo-data.js`). Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
+> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 54), `CHANGELOG.md`, `PASSATION.md` et les outils (`snowball.e2e.js`, `build-demo.py`, `shot.js`, `demo-data.js`). Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
 >
 > Pour commencer : mets `index.html` et `CHANGELOG.md` à la racine du dépôt, `PASSATION.md` dans `docs/`, `snowball.e2e.js` dans `tests/`, `build-demo.py` et `shot.js` dans `tools/`, `demo-data.js` dans `prototype/capture/` ; lance `python3 tools/build-demo.py && node tests/snowball.e2e.js` (43/43 attendu) ; fais un commit « Version 53 » et envoie-le sur GitHub.
 >

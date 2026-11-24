@@ -69,6 +69,19 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
       ok(w <= 320, `320 px sans débordement ${r}`, `largeur ${w}`);
     }
     await ctx.close(); }
+  // 7. Web app iPhone : icône d'écran d'accueil, nom, barre d'état
+  { const { ctx, p } = await mk(); await p.goto(APP); await p.waitForTimeout(300);
+    const w = await p.evaluate(async () => {
+      const q = s => document.querySelector(s), ic = q('link[rel="apple-touch-icon"]');
+      const img = new Image(); img.src = ic ? ic.href : ''; await img.decode().catch(() => {});
+      return { t: q('meta[name="apple-mobile-web-app-title"]')?.content, sb: q('meta[name="apple-mobile-web-app-status-bar-style"]')?.content, iw: img.naturalWidth, ih: img.naturalHeight };
+    });
+    ok(w.t === 'snowball', 'web app : nom « snowball » sous l\'icône');
+    ok(w.iw === 180 && w.ih === 180, 'web app : icône 180 × 180', `${w.iw}×${w.ih}`);
+    ok(w.sb === 'default', 'web app : barre d\'état');
+    await p.evaluate(() => { S.theme = 'dark'; applyTheme(); });
+    ok(await p.evaluate(() => document.querySelector('meta[name="theme-color"]').content) === '#121826', 'web app : barre du haut sombre en thème sombre');
+    await ctx.close(); }
   await b.close();
   console.log(`${fail} FAIL / ${pass + fail}`);
   process.exit(fail ? 1 : 0);
