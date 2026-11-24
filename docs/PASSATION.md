@@ -28,7 +28,7 @@ Ces règles ont été fixées au fil de la conversation ; les respecter évite d
 5. **Livrer à chaque fois le fichier `index.html` complet** (la personne le téléverse elle-même sur son téléphone). Les noms de fichiers côté téléphone sont du type `index-26.html`.
 6. **GitHub** : le dépôt est `arthuridentifiants-tech/Snowball` (privé). Les anciens dépôts `7jdj82pj62-lab/*` ont été supprimés : ne plus les utiliser. Commit avec un message clair et une entrée dans `CHANGELOG.md` à chaque version, puis envoi sur ce dépôt.
 7. **L'artifact « page de commentaires » n'est plus mis à jour** (demande explicite). Ne pas le republier.
-8. **Lancer les tests** après chaque modification (`node tests/parcours-accueil.e2e.js` → actuellement **170/170**).
+8. **Lancer les tests** après chaque modification (`python3 tools/build-demo.py && node tests/snowball.e2e.js` → actuellement **43/43**). Ajouter des vérifications quand on modifie une fonction.
 9. **Vérifier visuellement** avec des captures (voir § 9) et être honnête sur ce qui n'a pas pu être testé (l'environnement de développement n'a **pas d'accès internet** : logos, cours et apps IA ne peuvent pas y être vérifiés).
 10. **Préférences de fond exprimées** : une question par écran dans le questionnaire ; pas de défilement inutile ; mises en page centrées et équilibrées ; gain en vert, perte en rouge ; pas de doublons ; widgets pertinents, au bon endroit, au bon moment ; aller du général vers le détail ; « En savoir plus » = d'autres graphiques, pas du texte.
 
@@ -41,14 +41,12 @@ Ces règles ont été fixées au fil de la conversation ; les respecter évite d
 | `index.html` | L'application complète (v50). |
 | `CHANGELOG.md` | Historique détaillé des versions 1 à 50. |
 | `docs/PASSATION.md` | Ce document. |
-| `tests/parcours-accueil.e2e.js` | Tests de bout en bout (Playwright), 170 vérifications : parcours d'accueil complet, ajout de titres, crédits, projets, onglets, thème sombre… |
-| `tools/build-demo.py` | Construit `tools/out/demo.html` : l'appli + des données d'exemple, pour les captures. |
-| `tools/shot.js` | Capture d'un écran de la démo au format iPhone : `node tools/shot.js '#/a' tools/out/argent.png`. |
-| `prototype/capture/demo-data.js` | Jeu de données d'exemple (PEA, compte-titres, Livret A, assurance vie, PEE, crypto, appartement avec crédit, crédit auto, 3 projets, plan d'achats). |
-| `prototype/capture/capture.js` + `img/` | Ancien script de captures du catalogue (111 éléments). |
-| `prototype/catalogue-widgets.html` | Catalogue visuel des 111 widgets numérotés (sert de référence pour les numéros cités plus bas). |
-| `prototype/interface*.html`, `propositions.html`, PNG | Prototypes d'interface v1 à v4 (la v4 a servi de base au visuel actuel). |
-| `original/` | Fichiers d'origine de la personne (ancienne appli `test_3010.html`, diagnostic). |
+| `tests/snowball.e2e.js` | Tests de bout en bout (Playwright), **43 vérifications** : questionnaire pour un nouvel utilisateur, 18 écrans sans erreur, chiffres de la démo, « Demander à une IA » en 2 temps (presse-papiers vérifié), thème sombre, données conservées, 320 px sans débordement. |
+| `tools/build-demo.py` | Construit `tools/out/demo.html` : l'appli + les données d'exemple, pour les captures et les tests. |
+| `tools/shot.js` | Capture d'un écran de la démo au format iPhone : `node tools/shot.js '#/a' tools/out/argent.png [1 = page entière] [dark]`. Réseau coupé : logos en pastilles. |
+| `prototype/capture/demo-data.js` | Données d'exemple : PEA (3 lignes), compte-titres, Livret A, assurance vie, PEE, crypto, appartement avec crédit, crédit auto, budget, 2 grosses dépenses, 3 projets, plan d'achats, 400 jours d'historique. |
+
+**Recréés en version 53** : la série de tests v50 (170 vérifications), les outils de captures et le dossier `prototype/` (catalogue des 111 widgets, prototypes d'interface) n'étaient plus disponibles. Les outils et les tests ont été réécrits ; le catalogue et les prototypes sont perdus. `original/` (ancienne appli `test_3010.html` et diagnostic) est conservé (les numéros de widgets cités plus bas restent valables comme repères).
 
 **Git** : 66 commits locaux, dernier `fa126aa` (« Version 50 »). La version 19 est un retour volontaire à la base v17 (la v18, très simplifiée, a été rejetée).
 
@@ -199,11 +197,13 @@ Historique (v33 à v50, remplacé par le fonctionnement ci-dessus) :
 ## 9. Comment travailler sur le code
 
 ```bash
-# Tests (Playwright, Chromium préinstallé) : doit afficher « 0 FAIL / 170 »
-node tests/parcours-accueil.e2e.js
-
-# Démo avec données d'exemple + capture d'un écran au format iPhone
+# Démo avec données d'exemple (à refaire après chaque modification de index.html)
 python3 tools/build-demo.py
+
+# Tests (Playwright, Chromium préinstallé) : doit afficher « 0 FAIL / 43 »
+node tests/snowball.e2e.js
+
+# Capture d'un écran au format iPhone
 node tools/shot.js '#/' tools/out/accueil.png      # ajouter 1 en 3e argument pour la page entière
 node tools/shot.js '#/a' tools/out/argent.png
 ```
@@ -218,7 +218,7 @@ Conseils :
 ## 10. Points ouverts
 
 - **En attente de go** : copie fiable dans Sitecase (voir § 7).
-- **Fichiers à récupérer** : les tests v50 (170 vérifications), `tools/` et `prototype/` n'étaient pas dans la session des v51 à v53 ; les versions 51 à 53 ont été vérifiées par des tests ciblés et des captures.
+- **Outils recréés** : tests (43 vérifications), démo et captures réécrits en version 53 (voir § 3).
 
 - **Logos sur fond noir pour toutes les entreprises** : solution proposée et **non validée** = passer les logos par le relais Google (le script les récupère, l'appli les analyse et met tout sur fond blanc, sauf les fonds de couleur de marque comme Samsung ; mise en cache locale). Nécessite de mettre à jour le script Google une fois. Pour l'instant, seul Safran est corrigé ; ajouter les autres à `LOGO_DARK` au cas par cas.
 - **Logos manquants** : la personne peut envoyer une image ; l'intégrer dans `LOGO_EMBED` (recadrée en carré 128 px, PNG en base64) comme pour la Caisse d'Épargne et Natixis.
@@ -229,7 +229,9 @@ Conseils :
 
 ## 11. Message à coller pour démarrer la nouvelle conversation
 
-> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 53), `CHANGELOG.md` et `docs/PASSATION.md`. Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
+> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 53), `CHANGELOG.md`, `PASSATION.md` et les outils (`snowball.e2e.js`, `build-demo.py`, `shot.js`, `demo-data.js`). Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
+>
+> Pour commencer : mets `index.html` et `CHANGELOG.md` à la racine du dépôt, `PASSATION.md` dans `docs/`, `snowball.e2e.js` dans `tests/`, `build-demo.py` et `shot.js` dans `tools/`, `demo-data.js` dans `prototype/capture/` ; lance `python3 tools/build-demo.py && node tests/snowball.e2e.js` (43/43 attendu) ; fais un commit « Version 53 » et envoie-le sur GitHub.
 >
 > Règles : je t'envoie des captures d'écran avec mes remarques ; tu me proposes une liste numérotée de correctifs et tu attends mon « go » ; les petits détails visuels se corrigent directement ; tu me renvoies toujours le fichier `index.html` complet ; GitHub autorisé sur le dépôt `arthuridentifiants-tech/Snowball` : envoie chaque version ; une entrée dans le CHANGELOG à chaque version ; tu lances les tests et tu vérifies visuellement avant de livrer.
 >

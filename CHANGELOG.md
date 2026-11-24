@@ -6,6 +6,8 @@
   2. **Posez votre question** : de retour dans snowball, toucher une question toute prête la copie, ou écrire la sienne puis « Copier ma question » ; on revient dans l'IA et on colle dans la même discussion (ou on écrit directement dans l'IA).
 - **L'IA choisie est retenue** : l'étape 2 dit « Posez votre question dans Claude » (ou l'IA choisie), et la tuile reste entourée à la prochaine ouverture.
 - Copie courte et fiable pour la question ; « Voir les données » montre le message de l'étape 1.
+- **Outils recréés** (ceux de la v50 n'étaient plus disponibles) : données d'exemple (`prototype/capture/demo-data.js`), démo (`tools/build-demo.py`), captures iPhone (`tools/shot.js`) et tests (`tests/snowball.e2e.js`).
+- Tests : 43/43.
 
 ## Version 52
 - **Demander à une IA, en un toucher** : toucher une IA copie le message (la question choisie ou écrite, puis toutes les données) et ouvre l'IA aussitôt ; il reste à coller et envoyer. Plus d'écran intermédiaire ni d'explications.
