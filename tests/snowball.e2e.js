@@ -44,6 +44,8 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
   ok(c1 !== 'ANCIEN' && c1.length > 1000, 'IA étape 1 : données copiées', `${c1.length} car.`);
   ok(!c1.includes('## Ma question'), 'IA étape 1 : sans question');
   ok(/Ma question arrive dans le message suivant/.test(c1), 'IA étape 1 : annonce la question suivante');
+  ok(/^## Consigne : ne réponds pas encore/.test(c1) && /ne me pose aucune question/.test(c1) && /Fin du contexte/.test(c1), 'IA étape 1 : consigne « Bien reçu » au début et à la fin');
+  ok(!/Quelle est votre question/.test(c1), 'IA étape 1 : l\'IA ne doit pas demander la question');
   ok(/Banque A/.test(c1) && !/BoursoBank/.test(c1), 'IA : noms masqués par défaut');
   ok(/Posez votre question dans Claude/.test(await p.locator('.ai-body').innerText()), 'IA étape 2 : IA choisie affichée');
   await p.click('.ai-chips button:nth-child(2)');

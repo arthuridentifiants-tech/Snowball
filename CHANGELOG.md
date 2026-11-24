@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## Version 55
+- **Demander à une IA, étape 1** : le message de données commence et se termine par une consigne claire : c'est seulement le contexte, l'IA doit répondre uniquement « Bien reçu. », sans analyse, sans conseil et **sans demander la question**. Le début du message reste visible même quand l'IA transforme le texte collé en pièce jointe.
+- Tests : 49/49.
+
 ## Version 54
 - **Web app sur iPhone** : snowball est publié sur GitHub Pages (dépôt `snowball-app`), à ouvrir dans Safari puis « Sur l'écran d'accueil ».
 - **Icône d'écran d'accueil** : la boule de neige blanche sur fond bleu (intégrée au fichier), au lieu d'une miniature de la page.
