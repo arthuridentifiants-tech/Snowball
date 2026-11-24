@@ -84,7 +84,10 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
     await p.locator('.prof-g', { hasText: 'Tranche d’imposition' }).locator('select').selectOption('30');
     await p.locator('.prof-g', { hasText: 'Situation familiale' }).locator('select').selectOption('marie');
     await p.locator('.prof-g', { hasText: 'Logement' }).locator('select').selectOption('proprio');
-    await p.evaluate(id => { const i = [...document.querySelectorAll('input[type="month"]')][0]; i.value = '2018-03'; i.dispatchEvent(new Event('change')); }, pea);
+    await p.evaluate(() => { $('#modal-root').innerHTML = ''; openWizard('p-env:' + S.envs.find(e => e.type === 'pea').id); }); await p.waitForTimeout(200);
+    ok(await p.locator('#wz-root .wz-open', { hasText: 'Date d’ouverture' }).count() === 1, 'Questionnaire : date d’ouverture demandée avec le PEA');
+    await p.evaluate(() => { const i = document.querySelector('#wz-root input[type="month"]'); i.value = '2018-03'; i.dispatchEvent(new Event('change')); closeWizard(false); });
+    await p.waitForTimeout(150);
     const t2 = await p.evaluate(() => buildAIPromptFull(null, true));
     ok(/Âge : 4\d ans \(né·e en 1985\)/.test(t2) && /Tranche marginale d’imposition : 30 %/.test(t2), 'Mon profil : âge et tranche d’imposition dans le contexte');
     ok(/Ouvert en mars 2018, il y a 8 ans .* plus de 5 ans/.test(t2) && !/ouverture du compte « PEA 1 »/.test(t2), 'Mon profil : date d’ouverture du PEA prise en compte');
@@ -96,8 +99,8 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
     const wi = await p.locator('#wz-root').innerText();
     ok(/Facultatif/i.test(wi) && /restent sur votre téléphone/.test(wi) && /Passer cette partie/.test(wi), 'Questionnaire : profil facultatif, données en local');
     const n0 = p.errs.length;
-    for (const id of ['u-birth', 'u-fam', 'u-kids', 'u-pro', 'u-tmi', 'u-log', 'u-risk', 'u-open']) { await p.evaluate(x => wzGo(x), id); await p.waitForTimeout(80); }
-    ok(p.errs.length === n0, 'Questionnaire : 8 écrans du profil sans erreur', p.errs.slice(n0).join(' | '));
+    for (const id of ['u-birth', 'u-fam', 'u-kids', 'u-pro', 'u-tmi', 'u-log', 'u-risk']) { await p.evaluate(x => wzGo(x), id); await p.waitForTimeout(80); }
+    ok(p.errs.length === n0, 'Questionnaire : 7 écrans du profil sans erreur', p.errs.slice(n0).join(' | '));
     await p.evaluate(() => wzGo('u-tmi')); await p.waitForTimeout(80);
     await p.locator('.wz-choice', { hasText: '30 %' }).click(); await p.waitForTimeout(500);
     ok(await p.evaluate(() => S.prof.tmi === 30 && wzState().at === 'u-log'), 'Questionnaire : un choix enregistre et passe à la question suivante');

@@ -1,6 +1,6 @@
 # Passation — application « snowball »
 
-État au 24 novembre 2026, **version 59** (`index.html`). Ce document reprend tout le contexte utile pour continuer le développement dans une nouvelle conversation.
+État au 24 novembre 2026, **version 60** (`index.html`). Ce document reprend tout le contexte utile pour continuer le développement dans une nouvelle conversation.
 
 ---
 
@@ -28,7 +28,7 @@ Ces règles ont été fixées au fil de la conversation ; les respecter évite d
 5. **Livrer à chaque fois le fichier `index.html` complet** (la personne le téléverse elle-même sur son téléphone). Les noms de fichiers côté téléphone sont du type `index-26.html`.
 6. **GitHub** : le dépôt est `arthuridentifiants-tech/Snowball` (privé). Les anciens dépôts `7jdj82pj62-lab/*` ont été supprimés : ne plus les utiliser. **Web app** : `arthuridentifiants-tech/snowball-app` (public, branche `main`, **uniquement `index.html`**) est publié par GitHub Pages à l'adresse https://arthuridentifiants-tech.github.io/snowball-app/ ; la personne ouvre snowball dans Safari, ajouté à l'écran d'accueil (plus de Sitecase ni de téléversement). À chaque version, envoyer `index.html` sur les deux dépôts. **Prudence GitHub** (le compte a déjà été suspendu) : un seul envoi par version, jamais de création ou suppression de dépôt, pas d'issue, commentaire, pull request ni workflow sans demande, pas d'envoi forcé, aucun autre dépôt. Commit avec un message clair et une entrée dans `CHANGELOG.md` à chaque version, puis envoi sur ce dépôt.
 7. **L'artifact « page de commentaires » n'est plus mis à jour** (demande explicite). Ne pas le republier.
-8. **Lancer les tests** après chaque modification (`python3 tools/build-demo.py && node tests/snowball.e2e.js` → actuellement **67/67**). Ajouter des vérifications quand on modifie une fonction.
+8. **Lancer les tests** après chaque modification (`python3 tools/build-demo.py && node tests/snowball.e2e.js` → actuellement **68/68**). Ajouter des vérifications quand on modifie une fonction.
 9. **Vérifier visuellement** avec des captures (voir § 9) et être honnête sur ce qui n'a pas pu être testé (l'environnement de développement n'a **pas d'accès internet** : logos, cours et apps IA ne peuvent pas y être vérifiés).
 10. **Préférences de fond exprimées** : une question par écran dans le questionnaire ; pas de défilement inutile ; mises en page centrées et équilibrées ; gain en vert, perte en rouge ; pas de doublons ; widgets pertinents, au bon endroit, au bon moment ; aller du général vers le détail ; « En savoir plus » = d'autres graphiques, pas du texte.
 
@@ -38,10 +38,10 @@ Ces règles ont été fixées au fil de la conversation ; les respecter évite d
 
 | Fichier | Rôle |
 |---|---|
-| `index.html` | L'application complète (v59). |
+| `index.html` | L'application complète (v60). |
 | `CHANGELOG.md` | Historique détaillé des versions 1 à 50. |
 | `docs/PASSATION.md` | Ce document. |
-| `tests/snowball.e2e.js` | Tests de bout en bout (Playwright), **67 vérifications** : questionnaire pour un nouvel utilisateur, 18 écrans sans erreur, chiffres de la démo, « Demander à une IA » en 2 temps (presse-papiers vérifié), thème sombre, données conservées, 320 px sans débordement, icône et réglages de la web app. |
+| `tests/snowball.e2e.js` | Tests de bout en bout (Playwright), **68 vérifications** : questionnaire pour un nouvel utilisateur, 18 écrans sans erreur, chiffres de la démo, « Demander à une IA » en 2 temps (presse-papiers vérifié), thème sombre, données conservées, 320 px sans débordement, icône et réglages de la web app. |
 | `tools/build-demo.py` | Construit `tools/out/demo.html` : l'appli + les données d'exemple, pour les captures et les tests. |
 | `tools/shot.js` | Capture d'un écran de la démo au format iPhone : `node tools/shot.js '#/a' tools/out/argent.png [1 = page entière] [dark]`. Réseau coupé : logos en pastilles. |
 | `prototype/capture/demo-data.js` | Données d'exemple : PEA (3 lignes), compte-titres, Livret A, assurance vie, PEE, crypto, appartement avec crédit, crédit auto, budget, 2 grosses dépenses, 3 projets, plan d'achats, 400 jours d'historique. |
@@ -66,7 +66,7 @@ Ces règles ont été fixées au fil de la conversation ; les respecter évite d
   - `bud` : budget (`rev`, `groups{daily, housing, variable, subs…}` avec postes, `annualBills[]`).
   - `hist[]` : historique quotidien `{d, v (patrimoine net), c: {Bourse, Crypto, Épargne, Immobilier, Autres}}` (le détail par classe existe depuis la v20).
   - `target` : allocation cible en % par classe.
-  - `prof` (v58, facultatif, sert uniquement au message pour l'IA) : `birth` (année), `fam`, `kids`, `pro`, `tmi` (0/11/30/41/45), `log`, `risk`, `open{idCompte: 'AAAA-MM'}` (PEA, assurance vie, épargne salariale). Saisie : questionnaire d'accueil, partie facultative « Et vous » (écrans `u-intro` … `u-open`, avant `end`, `wzProfPick`), et `openProfileModal` (Réglages → Mes données → Mon profil). Plus dans la fenêtre IA (v59).
+  - `prof` (v58, facultatif, sert uniquement au message pour l'IA) : `birth` (année), `fam`, `kids`, `pro`, `tmi` (0/11/30/41/45), `log`, `risk`, `open{idCompte: 'AAAA-MM'}` (PEA, assurance vie, épargne salariale). Saisie : questionnaire d'accueil, partie facultative « Et vous » (écrans `u-intro` … `u-risk`, avant `end`, `wzProfPick`) ; la date d'ouverture se saisit sur l'écran du compte (`wzOpenRow`, PEA, assurance vie, épargne salariale, v60), et `openProfileModal` (Réglages → Mes données → Mon profil). Plus dans la fenêtre IA (v59).
   - Divers : `theme` (light/dark/auto), `url`/`urlMode` (relais), `inflOv`, `histP` (période de la courbe), `tipHide`, `wz` (état du questionnaire), `onbDone`, `gm` (net/brut), `fire`, `wOff` (ancien).
 - **Classes d'actifs** : `CLASSES = ['Bourse','Crypto','Épargne','Immobilier','Autres']`, couleurs `KCOL` (`--c0`…`--c4`).
 
@@ -203,7 +203,7 @@ Historique (v33 à v50, remplacé par le fonctionnement ci-dessus) :
 # Démo avec données d'exemple (à refaire après chaque modification de index.html)
 python3 tools/build-demo.py
 
-# Tests (Playwright, Chromium préinstallé) : doit afficher « 0 FAIL / 67 »
+# Tests (Playwright, Chromium préinstallé) : doit afficher « 0 FAIL / 68 »
 node tests/snowball.e2e.js
 
 # Capture d'un écran au format iPhone
@@ -220,7 +220,7 @@ Conseils :
 
 ## 10. Points ouverts
 
-- **Outils recréés** : tests (67 vérifications en v59), démo et captures réécrits en version 53 (voir § 3).
+- **Outils recréés** : tests (68 vérifications en v60), démo et captures réécrits en version 53 (voir § 3).
 
 - **Logos sur fond noir pour toutes les entreprises** : solution proposée et **non validée** = passer les logos par le relais Google (le script les récupère, l'appli les analyse et met tout sur fond blanc, sauf les fonds de couleur de marque comme Samsung ; mise en cache locale). Nécessite de mettre à jour le script Google une fois. Pour l'instant, seul Safran est corrigé ; ajouter les autres à `LOGO_DARK` au cas par cas.
 - **Logos manquants** : la personne peut envoyer une image ; l'intégrer dans `LOGO_EMBED` (recadrée en carré 128 px, PNG en base64) comme pour la Caisse d'Épargne et Natixis.
@@ -231,7 +231,7 @@ Conseils :
 
 ## 11. Message à coller pour démarrer la nouvelle conversation
 
-> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 59), `CHANGELOG.md`, `PASSATION.md` et les outils (`snowball.e2e.js`, `build-demo.py`, `shot.js`, `demo-data.js`). Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
+> Je continue le développement de mon application **snowball** (gestion de patrimoine, un seul fichier HTML, en français). Je te joins `index.html` (version 60), `CHANGELOG.md`, `PASSATION.md` et les outils (`snowball.e2e.js`, `build-demo.py`, `shot.js`, `demo-data.js`). Lis d'abord la passation en entier : elle décrit l'appli, son architecture, mes préférences et nos règles de travail.
 >
 > Pour commencer : mets `index.html` et `CHANGELOG.md` à la racine du dépôt, `PASSATION.md` dans `docs/`, `snowball.e2e.js` dans `tests/`, `build-demo.py` et `shot.js` dans `tools/`, `demo-data.js` dans `prototype/capture/` ; lance `python3 tools/build-demo.py && node tests/snowball.e2e.js` (43/43 attendu) ; fais un commit « Version 53 » et envoie-le sur GitHub.
 >

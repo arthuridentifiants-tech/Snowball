@@ -1,5 +1,9 @@
 # Journal des modifications
 
+## Version 60
+- **Date d'ouverture des contrats demandée plus tôt** : dans le questionnaire, sur l'écran de chaque PEA et assurance vie (ligne « Date d'ouverture · facultatif », sous la banque) et de l'épargne salariale (« Premier versement »). L'écran à part de la partie « Et vous » est retiré. Toujours modifiable dans Réglages → Mes données → Mon profil.
+- Tests : 68/68.
+
 ## Version 59
 - **« Mon profil » passe dans le questionnaire d'accueil** : nouvelle partie « Et vous, en quelques mots ? » après le plan, **facultative** (« Passer cette partie », « Passer » sur chaque écran), avec la mention que les réponses restent sur le téléphone et n'en sortent que si l'on envoie ses données à une IA. Une question par écran (année de naissance, situation familiale, enfants, situation professionnelle, tranche d'imposition, logement, goût du risque, dates d'ouverture des contrats) ; un choix fait passer à la question suivante.
 - Le profil n'est plus proposé dans la fenêtre IA ; il reste modifiable dans Réglages → Mes données → Mon profil.
