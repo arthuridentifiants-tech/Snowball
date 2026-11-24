@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## Version 56
+- **Demander à une IA : copie fiable dans la web app** :
+  1. **Nouvelle méthode de copie** : sur le site sécurisé (web app), l'appli utilise le presse-papiers moderne de l'iPhone et attend la fin de la copie ; l'ancienne méthode ne sert plus que de secours. « Copié » ne s'affiche que si la copie a réussi.
+  2. **Copier, puis ouvrir, en 2 touchers** : le 1er toucher sur une IA copie les données et la tuile devient « ✓ Ouvrir » (en vert) ; le 2e toucher ouvre l'IA. L'ouverture de l'IA ne peut plus interrompre la copie.
+  3. **Copie à la main en dernier recours** : si la copie échoue (données ou question), le texte s'affiche avec « Tout sélectionner », à copier avec la bulle « Copier » de l'iPhone, et un bouton « Ouvrir … ». Lien permanent « La copie ne marche pas ? Copier à la main ».
+- Tests : 53/53.
+
 ## Version 55
 - **Demander à une IA, étape 1** : le message de données commence et se termine par une consigne claire : c'est seulement le contexte, l'IA doit répondre uniquement « Bien reçu. », sans analyse, sans conseil et **sans demander la question**. Le début du message reste visible même quand l'IA transforme le texte collé en pièce jointe.
 - Tests : 49/49.
