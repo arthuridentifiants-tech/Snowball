@@ -1,5 +1,14 @@
 # Journal des modifications
 
+## Version 59
+- **« Mon profil » passe dans le questionnaire d'accueil** : nouvelle partie « Et vous, en quelques mots ? » après le plan, **facultative** (« Passer cette partie », « Passer » sur chaque écran), avec la mention que les réponses restent sur le téléphone et n'en sortent que si l'on envoie ses données à une IA. Une question par écran (année de naissance, situation familiale, enfants, situation professionnelle, tranche d'imposition, logement, goût du risque, dates d'ouverture des contrats) ; un choix fait passer à la question suivante.
+- Le profil n'est plus proposé dans la fenêtre IA ; il reste modifiable dans Réglages → Mes données → Mon profil.
+- **Demander à une IA** :
+  - après avoir touché son IA (copie du contexte et ouverture), la fenêtre passe d'elle-même à l'écran **« Posez votre question »** : questions toutes prêtes à copier, ou la sienne ; lien « Changer d'IA ou recopier mes données ».
+  - petit bouton **« Copier mon contexte personnel financier »** (copie sans ouvrir d'IA).
+  - lien « La copie ne marche pas ? » supprimé (la copie à la main ne s'affiche plus qu'en cas d'échec).
+- Tests : 67/67.
+
 ## Version 58
 - **Demander à une IA : contexte beaucoup plus précis** :
   1. **Imprécisions corrigées** : plus de « Crédit Crédit auto » ; inflation « non disponible » au lieu de 0 % quand elle n'a pas pu être chargée ; pour chaque titre, **cours actuel** et **prix de revient moyen** distincts, valeur, montant investi, plus-value en € et en %, **poids** dans les placements ; mensualités totales et du seul crédit immobilier distinguées.

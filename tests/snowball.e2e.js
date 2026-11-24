@@ -47,12 +47,18 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
   ok(/^## Consigne : ne réponds pas encore/.test(c1) && /ne me pose aucune question/.test(c1) && /Fin du contexte/.test(c1), 'IA étape 1 : consigne « Bien reçu » au début et à la fin');
   ok(!/Quelle est votre question/.test(c1), 'IA étape 1 : l\'IA ne doit pas demander la question');
   ok(/Banque A/.test(c1) && !/BoursoBank/.test(c1), 'IA : noms masqués par défaut');
-  ok(/Posez votre question dans Claude/.test(await p.locator('.ai-body').innerText()), 'IA étape 2 : IA choisie affichée');
+  await p.waitForTimeout(600);
+  ok(/Posez votre question dans Claude/.test(await p.locator('.ai-body').innerText()) && await p.locator('.ai-apps').count() === 0, 'IA : après le choix de l’IA, la fenêtre des questions s’ouvre');
   await p.click('.ai-chips button:nth-child(2)');
   ok(await clip() === await p.evaluate(() => AI_QUESTIONS[1]), 'IA étape 2 : question toute prête copiée');
   await p.fill('.ai-body textarea', 'Combien pour ma retraite ?'); await p.click('.ai-open');
   ok(await clip() === 'Combien pour ma retraite ?', 'IA étape 2 : question libre copiée');
-  ok((await p.locator('.ai-apps .ai-app[data-n="ChatGPT"]').getAttribute('href')) === 'https://chatgpt.com/?q=%E2%80%8B', 'IA : lien ChatGPT sans phrase');
+  await p.click('.ai-back'); await p.waitForTimeout(100);
+  ok((await p.locator('.ai-apps .ai-app[data-n="ChatGPT"]').getAttribute('href')) === 'https://chatgpt.com/?q=%E2%80%8B', 'IA : retour au choix de l’IA · lien ChatGPT sans phrase');
+  await p.evaluate(() => navigator.clipboard.writeText('ANCIEN'));
+  await p.click('.ai-ctx'); await p.waitForTimeout(200);
+  ok(/^## Consigne/.test(await clip()) && await p.locator('.ai-apps').count() === 1, 'IA : bouton « Copier mon contexte personnel financier »');
+  ok(await p.locator('text=La copie ne marche pas').count() === 0, 'IA : plus de lien « La copie ne marche pas »');
   await p.evaluate(() => openAIModal());
   ok(await p.locator('.ai-app.on').getAttribute('data-n') === 'Claude', 'IA : IA choisie retenue');
   // Copie impossible : le texte s'affiche pour la copie à la main
@@ -84,7 +90,20 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
     ok(/Ouvert en mars 2018, il y a 8 ans .* plus de 5 ans/.test(t2) && !/ouverture du compte « PEA 1 »/.test(t2), 'Mon profil : date d’ouverture du PEA prise en compte');
     ok(await p.evaluate(() => JSON.parse(localStorage.getItem('pf.v1')).prof.tmi) === 30, 'Mon profil : enregistré');
     await p.evaluate(() => { openAIModal(); }); await p.waitForTimeout(150);
-    ok(/Complété/.test(await p.locator('.ai-prof').innerText()), 'IA : lien « Mon profil » indique qu’il est complété');
+    ok(await p.locator('.ai-body button', { hasText: 'Mon profil' }).count() === 0, 'IA : le profil n’est plus demandé dans la fenêtre IA');
+    // Questionnaire : écrans du profil, facultatifs
+    await p.evaluate(() => { $('#modal-root').innerHTML = ''; delete S.prof; openWizard('u-intro'); }); await p.waitForTimeout(200);
+    const wi = await p.locator('#wz-root').innerText();
+    ok(/Facultatif/i.test(wi) && /restent sur votre téléphone/.test(wi) && /Passer cette partie/.test(wi), 'Questionnaire : profil facultatif, données en local');
+    const n0 = p.errs.length;
+    for (const id of ['u-birth', 'u-fam', 'u-kids', 'u-pro', 'u-tmi', 'u-log', 'u-risk', 'u-open']) { await p.evaluate(x => wzGo(x), id); await p.waitForTimeout(80); }
+    ok(p.errs.length === n0, 'Questionnaire : 8 écrans du profil sans erreur', p.errs.slice(n0).join(' | '));
+    await p.evaluate(() => wzGo('u-tmi')); await p.waitForTimeout(80);
+    await p.locator('.wz-choice', { hasText: '30 %' }).click(); await p.waitForTimeout(500);
+    ok(await p.evaluate(() => S.prof.tmi === 30 && wzState().at === 'u-log'), 'Questionnaire : un choix enregistre et passe à la question suivante');
+    await p.evaluate(() => wzGo('u-intro')); await p.waitForTimeout(80); await p.click('.wz-skip'); await p.waitForTimeout(150);
+    ok(await p.evaluate(() => wzState().at) === 'end', 'Questionnaire : « Passer cette partie » mène à la fin');
+    await p.evaluate(() => closeWizard(false)); await p.waitForTimeout(150);
     await p.evaluate(() => { delete S.prof; save(); $('#modal-root').innerHTML = ''; }); }
   // 5. Thème sombre et persistance
   await p.evaluate(() => { S.theme = 'dark'; save(); applyTheme(); });
