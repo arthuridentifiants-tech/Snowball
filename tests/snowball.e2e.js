@@ -37,15 +37,10 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
   await p.evaluate(() => openAIModal()); await p.waitForTimeout(200);
   ok(await p.locator('.ai-apps .ai-app').count() === 6, 'IA : 6 tuiles');
   await p.evaluate(() => navigator.clipboard.writeText('ANCIEN'));
-  const [pop0] = await Promise.all([p.context().waitForEvent('page', { timeout: 1500 }).catch(() => null), p.click('.ai-apps .ai-app[data-n="Claude"]')]);
-  if (pop0) await pop0.close();
-  await p.waitForTimeout(150);
-  const c1 = await clip();
-  ok(pop0 === null, 'IA étape 1 : 1er toucher = copie seule (l’IA ne s’ouvre pas encore)');
-  ok(/Ouvrir/.test(await p.locator('.ai-apps .ai-app[data-n="Claude"]').innerText()) && await p.locator('.ai-app.ready').count() === 1, 'IA étape 1 : la tuile devient « ✓ Ouvrir »');
   const [pop] = await Promise.all([p.context().waitForEvent('page', { timeout: 3000 }).catch(() => null), p.click('.ai-apps .ai-app[data-n="Claude"]')]);
   if (pop) await pop.close();
-  ok(pop !== null, 'IA étape 1 : 2e toucher = l’IA s’ouvre');
+  const c1 = await clip();
+  ok(pop !== null, 'IA étape 1 : un seul toucher copie et ouvre l’IA');
   ok(c1 !== 'ANCIEN' && c1.length > 1000, 'IA étape 1 : données copiées', `${c1.length} car.`);
   ok(!c1.includes('## Ma question'), 'IA étape 1 : sans question');
   ok(/Ma question arrive dans le message suivant/.test(c1), 'IA étape 1 : annonce la question suivante');
@@ -61,10 +56,10 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
   await p.evaluate(() => openAIModal());
   ok(await p.locator('.ai-app.on').getAttribute('data-n') === 'Claude', 'IA : IA choisie retenue');
   // Copie impossible : le texte s'affiche pour la copie à la main
-  await p.evaluate(() => { navigator.clipboard.writeText = () => Promise.reject(new Error('non')); document.execCommand = () => false; openAIModal(); });
+  await p.evaluate(() => { Object.defineProperty(navigator, 'clipboard', { value: undefined }); document.execCommand = () => false; openAIModal(); });
   await p.waitForTimeout(150); await p.click('.ai-apps .ai-app[data-n="Gemini"]'); await p.waitForTimeout(200);
   const man = await p.evaluate(() => { const t = document.querySelector('.ai-manual-t'); return t ? t.value : ''; });
-  ok(/^## Consigne/.test(man) && await p.locator('.ai-app.ready').count() === 0, 'IA : copie impossible → texte affiché pour la copie à la main');
+  ok(/^## Consigne/.test(man), 'IA : copie impossible → texte affiché pour la copie à la main');
   ok(await p.locator('.ai-manual a', { hasText: 'Ouvrir Gemini' }).count() === 1, 'IA : copie à la main → bouton « Ouvrir Gemini »');
   await p.reload(); await p.waitForTimeout(400);
   await p.evaluate(() => { $('#modal-root').innerHTML = ''; });

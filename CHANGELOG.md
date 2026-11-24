@@ -1,5 +1,10 @@
 # Journal des modifications
 
+## Version 57
+- **Demander à une IA : retour à un seul toucher** (à la demande) : toucher une IA copie le contexte et l'ouvre aussitôt, comme en v55. La question se copie ensuite depuis snowball (étape 2) et se colle dans la même discussion.
+- Conservé de la v56 : la consigne « Bien reçu. » (v55), la copie à la main si la copie automatique échoue, et le lien « La copie ne marche pas ? Copier à la main ».
+- Tests : 51/51.
+
 ## Version 56
 - **Demander à une IA : copie fiable dans la web app** :
   1. **Nouvelle méthode de copie** : sur le site sécurisé (web app), l'appli utilise le presse-papiers moderne de l'iPhone et attend la fin de la copie ; l'ancienne méthode ne sert plus que de secours. « Copié » ne s'affiche que si la copie a réussi.
