@@ -1,5 +1,10 @@
 # Journal des modifications
 
+## Tests (après la version 63, appli inchangée)
+- **Retour de la série historique** `tests/parcours-accueil.e2e.js` (170 vérifications), à côté de `tests/snowball.e2e.js` (83). Les deux sont à lancer après chaque modification.
+- Adaptée à deux changements voulus : la partie facultative « Et vous, en quelques mots ? » avant l'écran final (v59, une vérification ajoutée) et le titre final « Votre snowball est prête. » (v61).
+- Résultats : **171/171** et **83/83**.
+
 ## Version 63 — une appli propre et sérieuse
 **Identité**
 - Mini-logo de la barre du haut : la boule sur la colline, comme l'icône.
