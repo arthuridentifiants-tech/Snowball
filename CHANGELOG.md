@@ -1,5 +1,10 @@
 # Journal des modifications
 
+## Version 64
+- **Créer le code avec le pavé numérique** : on tape le code, puis on le confirme une deuxième fois ; si les deux sont différents, on recommence.
+- **Retirer le code demande le code actuel** (avant, une simple confirmation suffisait).
+- Tests : parcours-accueil 171/171 · snowball 90/90.
+
 ## Tests (après la version 63, appli inchangée)
 - **Retour de la série historique** `tests/parcours-accueil.e2e.js` (170 vérifications), à côté de `tests/snowball.e2e.js` (83). Les deux sont à lancer après chaque modification.
 - Adaptée à deux changements voulus : la partie facultative « Et vous, en quelques mots ? » avant l'écran final (v59, une vérification ajoutée) et le titre final « Votre snowball est prête. » (v61).

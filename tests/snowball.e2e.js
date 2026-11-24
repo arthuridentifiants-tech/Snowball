@@ -131,9 +131,15 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
     await p.evaluate(() => { location.hash = '#/a'; }); await p.waitForTimeout(250);
     ok(await p.locator('.n-fresh').count() === 1, 'Mon argent : date de mise à jour des cours et des soldes');
     await p.evaluate(() => openAboutModal()); await p.waitForTimeout(150);
-    ok(/Version 63/.test(await p.locator('#modal-root').innerText()) && /restent chez vous/.test(await p.locator('#modal-root').innerText()), 'écran Confidentialité et à propos');
+    ok(/Version 64/.test(await p.locator('#modal-root').innerText()) && /restent chez vous/.test(await p.locator('#modal-root').innerText()), 'écran Confidentialité et à propos');
+    const tap = async c => { for (const k of c) await p.click(`#lock .lk-k[aria-label="${k}"]`); await p.waitForTimeout(250); };
     await p.evaluate(() => { $('#modal-root').innerHTML = ''; openPinModal(); }); await p.waitForTimeout(150);
-    await p.fill('input[aria-label="Nouveau code"]', '1234'); await p.fill('input[aria-label="Confirmez le code"]', '1234'); await p.click('#modal-root .btn-primary');
+    ok(/Choisissez un code/.test(await p.locator('#lock').innerText()), 'code : création avec le pavé numérique');
+    await tap('1234'); ok(/Confirmez votre code/.test(await p.locator('#lock').innerText()), 'code : demande de confirmation');
+    await tap('9999'); await p.waitForTimeout(500);
+    ok(/différents/.test(await p.locator('#lock').innerText()) && await p.evaluate(() => !S.pinH), 'code : confirmation différente refusée');
+    await tap('1234'); await tap('1234'); await p.waitForTimeout(300);
+    ok(await p.evaluate(() => !!S.pinH) && await p.locator('#lock').count() === 0, 'code : créé après confirmation');
     await p.goto(DEMO); await p.waitForTimeout(600);
     ok(await p.locator('#lock').count() === 1, 'code : écran verrouillé à l’ouverture');
     for (const k of '1111') await p.click(`.lk-k[aria-label="${k}"]`);
@@ -143,7 +149,12 @@ const ok = (c, name, extra = '') => { c ? pass++ : fail++; console.log(`${c ? 'P
     for (const k of '1234') await p.click(`.lk-k[aria-label="${k}"]`);
     await p.waitForTimeout(400);
     ok(await p.locator('#lock').count() === 0, 'code : bon code, appli ouverte');
-    await p.evaluate(() => { delete S.pinH; delete S.pinS; save(); });
+    await p.evaluate(() => openPinModal()); await p.waitForTimeout(150);
+    ok(/code actuel/.test(await p.locator('#lock').innerText()), 'code : le retirer demande le code actuel');
+    await tap('0000'); await p.waitForTimeout(500);
+    ok(await p.evaluate(() => !!S.pinH), 'code : mauvais code, le verrouillage reste');
+    await tap('1234'); await p.waitForTimeout(300);
+    ok(await p.evaluate(() => !S.pinH) && await p.locator('#lock').count() === 0, 'code : bon code, verrouillage retiré');
     await p.evaluate(() => { const g = S.goals; S.goals = []; location.hash = '#/x'; location.hash = '#/'; window._g = g; }); await p.waitForTimeout(250);
     ok(await p.locator('.ess-row .n-pill', { hasText: 'Ajouter' }).count() === 1, 'Mes projets vide : vrai bouton « Ajouter »');
     await p.evaluate(() => { S.goals = window._g; save(); render(); }); }
